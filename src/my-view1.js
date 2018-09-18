@@ -26,8 +26,6 @@ class MyView1 extends PolymerElement {
          [[item.RowID]] 
      </template>
  </vaadin-grid-column>
-
-
           </div>
     `;
   }
@@ -51,8 +49,7 @@ class MyView1 extends PolymerElement {
 }
 
   _test(){
-    //This part I need to get right
-    this.$.grid.selectItem("Grace");;
+
   }
 
   ready() {
