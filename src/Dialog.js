@@ -7,7 +7,7 @@ import '@vaadin/vaadin-checkbox/vaadin-checkbox.js';
 import './shared-styles.js';
 import '@polymer/iron-ajax/iron-ajax.js';
 import '@vaadin/vaadin-grid/vaadin-grid-sorter.js';
-class MyView1 extends PolymerElement {
+class dialog extends PolymerElement {
   static get template() {
     return html`
       <style include="shared-styles">
@@ -18,7 +18,8 @@ class MyView1 extends PolymerElement {
         }
       </style>
 
-      <div class="card">
+   <vaadin-dialog opened>
+
       <vaadin-grid  id="employeeFilterListGrid" data-provider="[[dataProviderEmployee]]" size="[[size]]">
 
 <vaadin-grid-column id="rowIDD">
@@ -28,7 +29,7 @@ class MyView1 extends PolymerElement {
  </vaadin-grid-column>
 
 
-          </div>
+          </vaadin-dialog>
     `;
   }
   constructor() {
@@ -51,8 +52,7 @@ class MyView1 extends PolymerElement {
 }
 
   _test(){
-    //This part I need to get right
-    this.$.grid.selectItem("Grace");;
+
   }
 
   ready() {
@@ -84,4 +84,4 @@ class MyView1 extends PolymerElement {
 }
 }
 
-window.customElements.define('my-view1', MyView1);
+window.customElements.define('my-dialog', dialog);
