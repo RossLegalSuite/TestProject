@@ -5,6 +5,7 @@ import '@vaadin/vaadin-button/vaadin-button.js';
 import '@vaadin/vaadin-dialog/vaadin-dialog.js';
 import '@vaadin/vaadin-checkbox/vaadin-checkbox.js';
 import './shared-styles.js';
+import './my-dialog.js';
 import '@polymer/iron-ajax/iron-ajax.js';
 import '@vaadin/vaadin-grid/vaadin-grid-sorter.js';
 
@@ -20,7 +21,7 @@ class MyView1 extends PolymerElement {
 </style>
 
 <div class="card">
-  <vaadin-button theme="success primary" on-click="_openDialog">openDialog</vaadin-button>
+
   <my-dialog></my-dialog>
   <vaadin-grid aria-label="Remote Data Example" data-provider="[[dataProvider]]" size="[[size]]">
 
@@ -52,11 +53,6 @@ class MyView1 extends PolymerElement {
     return {
 
     };
-  }
-
-  _openDialog() {
-    import('./my-dialog.js');
-    console.log(this);
   }
 
   ready() {

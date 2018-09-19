@@ -7,7 +7,7 @@ import '@vaadin/vaadin-checkbox/vaadin-checkbox.js';
 import './shared-styles.js';
 import '@polymer/iron-ajax/iron-ajax.js';
 import '@vaadin/vaadin-grid/vaadin-grid-sorter.js';
-class myDialog extends PolymerElement {
+class myDialogList extends PolymerElement {
   static get template() {
     return html`<style include="shared-styles">
     :host {
@@ -16,12 +16,27 @@ class myDialog extends PolymerElement {
       padding: 10px;
     }
   </style>
-   <vaadin-button id="openDialog" theme="success primary" on-click="_openDialog">Open Filters</vaadin-button>
-  <vaadin-dialog id="dialog">
+  
+  <vaadin-dialog id="dialog" opened>
     <template>
-     <input value="Value will be Here">
-     <vaadin-button id="openDialoglist" theme="success primary" on-click="_openDialoglist">...</vaadin-button>
-     <my-dialoglist></my-dialoglist>
+      <vaadin-grid id="dialogGrid" aria-label="Remote Data Example" data-provider="[[dataProvider]]" size="[[size]]" active-item="{{activeItem}}">
+  
+        <vaadin-grid-column width="60px" flex-grow="0">
+          <template class="header">#</template>
+          <template>[[index]]</template>
+        </vaadin-grid-column>
+  
+        <vaadin-grid-column>
+          <template class="header">First Name</template>
+          <template>[[item.firstName]]</template>
+        </vaadin-grid-column>
+  
+        <vaadin-grid-column>
+          <template class="header">Last Name</template>
+          <template>[[item.lastName]]</template>
+        </vaadin-grid-column>
+  
+      </vaadin-grid>
     </template>
   </vaadin-dialog>
 
@@ -33,15 +48,16 @@ class myDialog extends PolymerElement {
   }
   static get properties() {
     return {
-      
+      activeItem: {
+        observer: '_activeItemChanged'
+      }
+
     };
   }
-  _openDialog() {
-    this.$.dialog.opened = true;
-    
-  }
-  _openDialoglist() {
-    import('./my-dialoglist.js');
+
+  _activeItemChanged(item) {
+    const grid = this.$.dialog.$.overlay.content.querySelector('vaadin-grid')
+    grid.selectedItems = item ? [item] : [];
     
   }
 
@@ -62,4 +78,4 @@ class myDialog extends PolymerElement {
 
 }
 
-window.customElements.define('my-dialog', myDialog);
+window.customElements.define('my-dialoglist', myDialogList);
