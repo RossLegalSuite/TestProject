@@ -5,7 +5,6 @@ import '@vaadin/vaadin-button/vaadin-button.js';
 import '@vaadin/vaadin-dialog/vaadin-dialog.js';
 import '@vaadin/vaadin-checkbox/vaadin-checkbox.js';
 import './shared-styles.js';
-import './Dialog.js';
 import '@polymer/iron-ajax/iron-ajax.js';
 import '@vaadin/vaadin-grid/vaadin-grid-sorter.js';
 
@@ -56,6 +55,8 @@ class MyView1 extends PolymerElement {
   }
 
   _openDialog() {
+    import('./my-dialog.js');
+    console.log(this);
   }
 
   ready() {

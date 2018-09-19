@@ -7,7 +7,7 @@ import '@vaadin/vaadin-checkbox/vaadin-checkbox.js';
 import './shared-styles.js';
 import '@polymer/iron-ajax/iron-ajax.js';
 import '@vaadin/vaadin-grid/vaadin-grid-sorter.js';
-class dialog extends PolymerElement {
+class myDialog extends PolymerElement {
   static get template() {
     return html`<style include="shared-styles">
     :host {
@@ -39,6 +39,7 @@ class dialog extends PolymerElement {
       </vaadin-grid>
     </template>
   </vaadin-dialog>
+
     `;
   }
   constructor() {
@@ -56,7 +57,7 @@ class dialog extends PolymerElement {
 
   _activeItemChanged(item) {
     //Cannot select Item
-    this.$.dialogGrid.selectedItems = item ? [item] : [];
+   // this.$.dialogGrid.selectedItems = item ? [item] : [];
   }
 
 
@@ -76,4 +77,4 @@ class dialog extends PolymerElement {
 
 }
 
-window.customElements.define('my-dialog', dialog);
+window.customElements.define('my-dialog', myDialog);
