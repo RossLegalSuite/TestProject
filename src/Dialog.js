@@ -9,79 +9,71 @@ import '@polymer/iron-ajax/iron-ajax.js';
 import '@vaadin/vaadin-grid/vaadin-grid-sorter.js';
 class dialog extends PolymerElement {
   static get template() {
-    return html`
-      <style include="shared-styles">
-        :host {
-          display: block;
-
-          padding: 10px;
-        }
-      </style>
-
-   <vaadin-dialog opened>
-
-      <vaadin-grid  id="employeeFilterListGrid" data-provider="[[dataProviderEmployee]]" size="[[size]]">
-
-<vaadin-grid-column id="rowIDD">
-      <template id="rowID">
-         [[item.RowID]] 
-     </template>
- </vaadin-grid-column>
-
-
-          </vaadin-dialog>
+    return html`<style include="shared-styles">
+    :host {
+      display: block;
+  
+      padding: 10px;
+    }
+  </style>
+  
+  <vaadin-dialog id="dialog" opened>
+    <template>
+      <vaadin-grid id="dialogGrid" aria-label="Remote Data Example" data-provider="[[dataProvider]]" size="[[size]]" active-item="{{activeItem}}">
+  
+        <vaadin-grid-column width="60px" flex-grow="0">
+          <template class="header">#</template>
+          <template>[[index]]</template>
+        </vaadin-grid-column>
+  
+        <vaadin-grid-column>
+          <template class="header">First Name</template>
+          <template>[[item.firstName]]</template>
+        </vaadin-grid-column>
+  
+        <vaadin-grid-column>
+          <template class="header">Last Name</template>
+          <template>[[item.lastName]]</template>
+        </vaadin-grid-column>
+  
+      </vaadin-grid>
+    </template>
+  </vaadin-dialog>
     `;
   }
   constructor() {
     super();
-    this.EmployeePageObject = {
-        "pageNumber": 0,
-        "pageLength": 0
-    };
-
-}
-  static get properties() {
-    return {
-      EmployeePageObject: Object,
-      filterObject: {
-          type: Object,
-
-      }   
-       
-    };
-}
-
-  _test(){
 
   }
+  static get properties() {
+    return {
+      activeItem: {
+        observer: '_activeItemChanged'
+      }
+
+    };
+  }
+
+  _activeItemChanged(item) {
+    //Cannot select Item
+    this.$.dialogGrid.selectedItems = item ? [item] : [];
+  }
+
 
   ready() {
     super.ready();
-    this.size = 2000;
-
-    let that = this;
-    this.dataProviderEmployee = function (params, callback) {
-
-        var url = 'http://www.legalsuiteonline.co.za/ApiService.svc/Employees/Filter'
-        var xhr = new XMLHttpRequest();
-        xhr.onload = function () {
-            var response = JSON.parse(xhr.responseText);
-            callback(response);
-        };
-        xhr.open('GET', url, true);
-        that.EmployeePageObject.pageNumber = params.page;
-        that.EmployeePageObject.pageLength = params.pageSize;
-        // if (that.$.browseFilters.filterObject.filters.length !== 0) {
-        //     console.log("apiObject was sent");
-
-        //     xhr.setRequestHeader("filter", JSON.stringify(that.apiObject));
-
-        // } else {
-        xhr.setRequestHeader("filter", JSON.stringify(that.EmployeePageObject));
-        // }
-        xhr.send();
+    this.size = 200;
+    this.dataProvider = function (params, callback) {
+      var xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        callback(JSON.parse(xhr.responseText).result);
+      };
+      var index = params.page * params.pageSize;
+      xhr.open('GET', 'https://demo.vaadin.com/demo-data/1.0/people?index=' + index + '&count=' + params.pageSize, true);
+      xhr.send();
     };
-}
+  }
+
 }
 
 window.customElements.define('my-dialog', dialog);
