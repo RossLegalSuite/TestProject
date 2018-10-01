@@ -63,7 +63,7 @@ class MyView1 extends PolymerElement {
     grid._scrollToIndex(75);
 
 //---
-    //Beat happens here, even thought grid._cache.items has 100 items in it, when creating the results to map to an array it only has 50 on the first click
+    //Break happens here, even thought grid._cache.items has 100 items in it, when creating the results to map to an array it only has 50 on the first click
 //--
     console.log("grid._cache.items",grid._cache.items);
     //Creates an Object of all the Items in the grid.
